@@ -1,0 +1,25 @@
+<p>page-pokemon works!</p>
+<div>
+  <app-label-pokemon-info
+  [count]="pokemonCount$ | async"
+  [next]="pokemonNext$ | async"
+  [previous]="pokemonPrevious$ | async"
+  ></app-label-pokemon-info>
+
+  <p>
+    <ng-container *ngIf="pokemonPrevious$ | async as previous" >
+          <button  (click)="loadPrevious(previous)" ><</button>
+    </ng-container>
+
+    <ng-container *ngIf="pokemonNext$ | async as next" >
+      <button (click)="loadNext(next)">></button>
+    </ng-container>
+  </p>
+
+</div>
+<ng-container *ngIf="pokemonList$ | async as pokemonList">
+  <ul>
+    <li *ngFor="let pokemon of pokemonList">
+      <app-label-pokemon [pokemon]="pokemon" (pokemonChosen)="loadNext($event)"></app-label-pokemon>
+  </ul>
+</ng-container>
